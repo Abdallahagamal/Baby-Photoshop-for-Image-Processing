@@ -1,2 +1,3 @@
 ﻿  Source.cpp
+D:\git hub\Baby-Photoshop-for-Image-Processing\Baby photoshop\Baby photoshop\Source.cpp(68,39): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
   Baby photoshop.vcxproj -> D:\git hub\Baby-Photoshop-for-Image-Processing\Baby photoshop\x64\Debug\Baby photoshop.exe
