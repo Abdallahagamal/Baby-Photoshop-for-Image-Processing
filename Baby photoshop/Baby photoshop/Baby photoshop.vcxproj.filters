@@ -31,7 +31,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\arrow.jpg">
+    <Image Include="..\..\..\..\arrow.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
