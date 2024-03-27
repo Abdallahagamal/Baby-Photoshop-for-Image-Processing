@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\git hub\\Baby-Photoshop-for-Image-Processing\\Baby photoshop\\",
+  "WorkspaceRootPath": "C:\\Users\\abdlm\\Desktop\\gitproject\\Baby-Photoshop-for-Image-Processing\\Baby photoshop\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{60AD07AF-33C5-4EC0-9AC8-4F894ADD7A5A}|Baby photoshop\\Baby photoshop.vcxproj|D:\\git hub\\Baby-Photoshop-for-Image-Processing\\Baby photoshop\\Baby photoshop\\Source.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{60AD07AF-33C5-4EC0-9AC8-4F894ADD7A5A}|Baby photoshop\\Baby photoshop.vcxproj|C:\\Users\\abdlm\\Desktop\\gitproject\\Baby-Photoshop-for-Image-Processing\\Baby photoshop\\Baby photoshop\\Source.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{60AD07AF-33C5-4EC0-9AC8-4F894ADD7A5A}|Baby photoshop\\Baby photoshop.vcxproj|solutionrelative:Baby photoshop\\Source.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -20,11 +20,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Source.cpp",
-              "DocumentMoniker": "D:\\git hub\\Baby-Photoshop-for-Image-Processing\\Baby photoshop\\Baby photoshop\\Source.cpp",
+              "DocumentMoniker": "C:\\Users\\abdlm\\Desktop\\gitproject\\Baby-Photoshop-for-Image-Processing\\Baby photoshop\\Baby photoshop\\Source.cpp",
               "RelativeDocumentMoniker": "Baby photoshop\\Source.cpp",
-              "ToolTip": "D:\\git hub\\Baby-Photoshop-for-Image-Processing\\Baby photoshop\\Baby photoshop\\Source.cpp",
+              "ToolTip": "C:\\Users\\abdlm\\Desktop\\gitproject\\Baby-Photoshop-for-Image-Processing\\Baby photoshop\\Baby photoshop\\Source.cpp",
               "RelativeToolTip": "Baby photoshop\\Source.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAE0AAAANAAAA",
+              "ViewState": "AQIAAFIAAAAAAAAAAAAAAFYAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-03-26T13:58:39.034Z",
               "EditorCaption": ""

@@ -1,3 +1,4 @@
 ﻿  Source.cpp
-D:\git hub\Baby-Photoshop-for-Image-Processing\Baby photoshop\Baby photoshop\Source.cpp(68,39): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  Baby photoshop.vcxproj -> D:\git hub\Baby-Photoshop-for-Image-Processing\Baby photoshop\x64\Debug\Baby photoshop.exe
+C:\Users\abdlm\Desktop\gitproject\Baby-Photoshop-for-Image-Processing\Baby photoshop\Baby photoshop\Source.cpp(68,39): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+LINK : warning LNK4081: insufficient disk space; linking nonincrementally
+  Baby photoshop.vcxproj -> C:\Users\abdlm\Desktop\gitproject\Baby-Photoshop-for-Image-Processing\Baby photoshop\x64\Debug\Baby photoshop.exe

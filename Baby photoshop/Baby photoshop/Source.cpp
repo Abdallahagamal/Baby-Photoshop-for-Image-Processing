@@ -2,9 +2,9 @@
 #include "Image_Class.h"
 using namespace std;
 Image image;
+string filename;
 
 void invert_image(Image&image) {
-        cout << "Please enter image name to apply invert filter: ";
         for (int i = 0; i < image.width; i++) {
             for (int j = 0; j < image.height; j++) {
                 for (int k = 0; k < image.channels; k++) {
@@ -77,15 +77,39 @@ void Lighten_Image(Image& image) {
 }
 void save() {
     string filename2;
-    cout << "Pls enter image name to store new image\n";
-    cout << "and specify extension .jpg, .bmp, .png, .tga: ";
-    cin >> filename2;
-    image.saveImage(filename2);
-    cout << "Photo Has been save successfully";
-    system(filename2.c_str());
+   
+    string choice;
+    cout << "1- save a new file \n2-save in current file\n";
+    cout << "enter your choice : ";
+    while (true)
+    {
+        cin >> choice;
+        if (choice == "1")
+        {
+            cout << "Pls enter image name to store new image\n";
+            cout << "and specify extension .jpg, .bmp, .png, .tga: ";
+            cin >> filename2;
+            image.saveImage(filename2);
+            cout << "Photo Has been save successfully";
+            system(filename2.c_str());
+            break;
+
+        }
+        else if (choice == "2")
+        {
+            image.saveImage(filename);
+            cout << "Photo Has been save successfully";
+            system(filename.c_str());
+            break;
+        }
+        else cout << "wrong choice , try again";
+
+
+    }
+    
 }
 void load(Image&image) {
-    string filename;
+   
     while (true) {
         try {
             cin >> filename;
@@ -99,13 +123,52 @@ void load(Image&image) {
     }
 
 }
+void filter_55(Image&image) {
+    string filename;
+    cout << "Please choose from 1 or 2\n1-flip horizontally\n2-flip vertically\n";
+    int n;
+    cin >> n;
+
+    if (n == 1) {
+        cout << "Please enter the name of the image to flip horizontally: ";
+        cin >> filename;
+
+        int width = image.width;
+        int height = image.height;
+
+        for (int i = 0; i < height; ++i) {
+            for (int j = 0; j < width / 2; ++j) {
+                for (int k = 0; k < image.channels; ++k) {
+                    swap(image(j, i, k), image(width - j - 1, i, k));
+                }
+            }
+        }
+
+        
+        
+    }
+    else if (n == 2) {
+        int width = image.width;
+        int height = image.height;
+
+        for (int i = 0; i < height / 2; ++i) {
+            for (int j = 0; j < width; ++j) {
+                for (int k = 0; k < image.channels; ++k) {
+                    swap(image(j, i, k), image(j, height - i - 1, k));
+                }
+            }
+        }
+
+    }
+}
+
 int main() {
     cout << "=============== Welcome to Baby-Photoshop ===============\nPlease load the image, enter name of the image: ";
     load(image);
     bool x = false;
     string choice,choice2 ;
     while (true){
-       cout << "\n{1}load new image\n{2} GrayScale \n{3} Black And White \n{4} Invert Image \n{5} Lighten Image Or Darken Image \n{6}gad \n{7}Save the image \n{8}Exit \n";
+       cout << "\n{1} load new image\n{2} GrayScale \n{3} Black And White \n{4} Invert Image \n{5} Lighten Image Or Darken Image \n{6} Flip Image \n{7} Save the image\n{8} Exit \n";
        cout << "enter your choice : " ;
        cin >> choice ;
         if (choice=="1") {
@@ -157,19 +220,20 @@ int main() {
                 if (choice2 == "1"){
                     Lighten_Image(image);
                     x = true;
-                    return 0 ;
+                    break;
+                    
                 }
                 else if (choice2 == "2"){
                     Darken_Image(image);
                     x = true;
-                    return 0 ;
+                    break;
+                  
                 }
             }
             
         }
         else if (choice=="6"){
-            //
-            break;
+            filter_55(image);
         }
         else if (choice == "7") {
             save();
@@ -181,7 +245,7 @@ int main() {
                 cin >> choice2;
                 if (choice2=="1") {
                     save();
-                    
+                    break;
                 }
                 else if (choice2=="2") {
                     cout << "Thanks for using app";
