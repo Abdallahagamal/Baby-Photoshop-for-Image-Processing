@@ -1,4 +1,5 @@
 #include <iostream>
+#include < algorithm >
 #include "Image_Class.h"
 using namespace std;
 Image image;
@@ -88,12 +89,20 @@ void save() {
         {
             cout << "Pls enter image name to store new image\n";
             cout << "and specify extension .jpg, .bmp, .png, .tga: ";
-            cin >> filename2;
-            image.saveImage(filename2);
-            cout << "Photo Has been save successfully";
-            system(filename2.c_str());
+            while (true) {
+                try {
+                    cin >> filename2;
+                    image.saveImage(filename2);
+                    cout << "Photo Has been save successfully";
+                    system(filename2.c_str());
+                    
+                }
+                catch (...) {
+                    cout << "Please Enter Right Format:\a ";
+                }
+                break;
+            }
             break;
-
         }
         else if (choice == "2")
         {
@@ -383,15 +392,93 @@ void filter_fancyframe(Image& image, int R, int G, int B) {
     
     return;
 }
-void filter_rotate(Image& image) {
-    for (int i = 0; i < image.width; i++) {
-        for (int j = 0; j < image.height; j++) {
-            for (int k = 0; k < image.channels; k++) {
-                
+Image rotate_180(Image& image) {
+    int originalWidth = image.width;
+    int originalHeight = image.height;
+
+    // Create a temporary image to hold the rotated data
+    Image rotatedImage2(originalWidth, originalHeight); // Swapped width and height
+
+    // Loop through each pixel in the original image
+    for (int i = 0; i < originalWidth; ++i) {  // Use originalWidth for outer loop
+        for (int j = 0; j < originalHeight; ++j) {
+            // Calculate corresponding pixel coordinates in the rotated image (90 degrees clockwise)
+            int newX = originalHeight - j - 1;  // Use originalWidth for newX
+            int newY = originalWidth - i - 1;
+
+            // Access pixel values from original image
+            unsigned char red = image(i, j, 0);
+            unsigned char green = image(i, j, 1);
+            unsigned char blue = image(i, j, 2);
+
+            // Assign pixel values to corresponding location in rotated image
+            rotatedImage2(newY, newX, 0) = red;
+            rotatedImage2(newY, newX, 1) = green;
+            rotatedImage2(newY, newX, 2) = blue;
+        }
+    }
+    return rotatedImage2;
+}
+Image filter_rotate(Image&image,string ch) {
+    int originalWidth = image.width;
+    int originalHeight = image.height;
+    int newY;
+    int newX;
+    //temporary image to hold the rotated data
+    Image rotatedImage(originalHeight, originalWidth);
+    for (int i = 0; i < originalWidth; ++i) {  
+        for (int j = 0; j < originalHeight; ++j) {
+            if (ch== "1") {
+                // the rotated image 90 degrees clockwise
+                newX = i;
+                newY = originalHeight - 1 - j;
             }
+            else if (ch == "3") {
+                // the rotated image 270 degrees clockwise
+                newX = originalWidth - 1 - i;
+                newY = j;
+            }
+            // Access pixel values from original image
+            unsigned char red = image(i, j, 0);
+            unsigned char green = image(i, j, 1);
+            unsigned char blue = image(i, j, 2);
+
+            // Assign pixel values to corresponding location in rotated image
+            rotatedImage(newY, newX, 0) = red;
+            rotatedImage(newY, newX, 1) = green;
+            rotatedImage(newY, newX, 2) = blue;
+        }
+    }
+    return rotatedImage;
+}
+void BlurFilter(Image& image, int kernelSize) {
+    for (int j = 0; j < image.height; ++j) {
+        for (int i = 0; i < image.width; ++i) {
+            float totalRed = 0, totalGreen = 0, totalBlue = 0;
+            for (int ky = -kernelSize / 2; ky <= kernelSize / 2; ++ky) {
+                for (int kx = -kernelSize / 2; kx <= kernelSize / 2; ++kx) {
+                    int pixelX = i + kx;
+                    int pixelY = j + ky;
+                    if (pixelX >= 0 && pixelX < image.width && pixelY >= 0 && pixelY < image.height) {
+                        totalRed += image(pixelX, pixelY, 0);
+                        totalGreen += image(pixelX, pixelY, 1);
+                        totalBlue += image(pixelX, pixelY, 2);
+                    }
+                }
+            }
+
+            int numPixels = kernelSize * kernelSize;
+            totalRed /= numPixels;
+            totalGreen /= numPixels;
+            totalBlue /= numPixels;
+
+            image(i, j, 0) = static_cast<unsigned char>(totalRed);
+            image(i, j, 1) = static_cast<unsigned char>(totalGreen);
+            image(i, j, 2) = static_cast<unsigned char>(totalBlue);
         }
     }
 }
+
 int main() {
     int R=0, G=0, B=0;
     cout << "=============== Welcome to Baby-Photoshop ===============\nPlease load the image, enter name of the image: ";
@@ -399,13 +486,14 @@ int main() {
     bool x = false;
     string choice,choice2 ;
     while (true){
-       cout << "\n{1} load new image\n{2} GrayScale \n{3} Black And White \n{4} Invert Image \n{5} Lighten Image Or Darken Image \n{6} Flip Image\n{7} Frame\n{8}  \n{9}  \n{10}  \n{11}  \n{12}  \n{13}   \n{14}  \n{15}   \n{16} Save the image\n{17} Exit \n";
+       cout << "\n{1} load new image\n{2} GrayScale \n{3} Black And White \n{4} Invert Image \n{5} Lighten Image Or Darken Image \n{6} Flip Image\n{7} Frame\n{8} Blur\n{9} Rotate  \n{10}  \n{11}  \n{12}  \n{13}   \n{14}  \n{15}   \n{16}   \n{17} Save the image\n{18} Exit \n";
        cout << "enter your choice : " ;
        cin >> choice ;
         if (choice=="1") {
             if (x == false) {
                 cout << "Please load the new image, enter name of the image: ";
                 load(image);
+                remove("Temp.jpg");
             }
             else {
                cout << "\nDo you want to save the current image before loading a new one?\n1)Yes\n2)No\nEnter your choice: ";
@@ -415,11 +503,13 @@ int main() {
                        save();
                        cout << "Please load the new image, enter name of the image: ";
                        load(image);
+                       remove("Temp.jpg");
                        break;
                    }
                    else if (choice2 == "2") {
                        cout << "Please load the new image, enter name of the image: ";
                        load(image);
+                       remove("Temp.jpg");
                        break;
                    }
                    else {
@@ -488,15 +578,37 @@ int main() {
             x = true;
         }
         else if (choice == "8") {
-            
+            int i = 4;
+            while (i--) {
+                BlurFilter(image, 25);
+            }
             x = true;
         }
         else if (choice == "9") {
-
+            string ch;
+            cout << "1) Rotate by 90 degree\n2) Rotate by 180 degree\n3) Rotate by 270 degree\nChoose the angle of rotation Enter Your choice: ";
+            while (true) {
+                cin >> ch;
+                if (ch == "1" || ch == "3") {
+                    Image image2 = filter_rotate(image, ch);
+                    image2.saveImage("Temp.jpg");
+                    image.loadNewImage("Temp.jpg");
+                    break;
+                }
+                else if (ch == "2") {
+                    Image image3 = rotate_180(image);
+                    image3.saveImage("Temp.jpg");
+                    image.loadNewImage("Temp.jpg");
+                    break;
+                }
+                else {
+                    cout << "Enter right Choice please:\a ";
+                }
+            }
             x = true;
         }
         else if (choice == "10") {
-
+           
             x = true;
         }
         else if (choice == "11") {
@@ -520,21 +632,34 @@ int main() {
             x = true;
         }
         else if (choice == "16") {
-            save();
-            x = false;
+
+            x = true;
         }
         else if (choice == "17") {
+            save();
+            remove("Temp.jpg");
+            x = false;
+        }
+        else if (choice == "18") {
             if (x == true) {
-                cout << "Do you want to save the current image before exit?\n1)yes\n2)no\nEnter your choice: ";
-                cin >> choice2;
-                if (choice2=="1") {
-                    save();
-                    break;
+                cout << "Do you want to save the current image before exit?\n1) Yes\n2) No\nEnter your choice: ";
+                while (true) {
+                    cin >> choice2;
+                    if (choice2 == "1") {
+                        save();
+                        remove("Temp.jpg");
+                        break;
+                    }
+                    else if (choice2 == "2") {
+                        cout << "Thanks for using app";
+                        remove("Temp.jpg");
+                        break;
+                    }
+                    else {
+                        cout << "Please Enter Right choice: ";
+                    }
                 }
-                else if (choice2=="2") {
-                    cout << "Thanks for using app";
-                    break;
-                }
+                break;
             }
             else {
                 cout << "Thanks for using app";
