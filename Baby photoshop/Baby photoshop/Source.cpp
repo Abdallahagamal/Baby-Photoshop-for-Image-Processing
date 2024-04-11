@@ -396,22 +396,21 @@ Image rotate_180(Image& image) {
     int originalWidth = image.width;
     int originalHeight = image.height;
 
-    // Create a temporary image to hold the rotated data
-    Image rotatedImage2(originalWidth, originalHeight); // Swapped width and height
+    // to hold the rotated image
+    Image rotatedImage2(originalWidth, originalHeight); 
 
-    // Loop through each pixel in the original image
-    for (int i = 0; i < originalWidth; ++i) {  // Use originalWidth for outer loop
+    
+    for (int i = 0; i < originalWidth; ++i) { 
         for (int j = 0; j < originalHeight; ++j) {
-            // Calculate corresponding pixel coordinates in the rotated image (90 degrees clockwise)
-            int newX = originalHeight - j - 1;  // Use originalWidth for newX
+            int newX = originalHeight - j - 1; 
             int newY = originalWidth - i - 1;
 
-            // Access pixel values from original image
+            // get pixel values from original image
             unsigned char red = image(i, j, 0);
             unsigned char green = image(i, j, 1);
             unsigned char blue = image(i, j, 2);
 
-            // Assign pixel values to corresponding location in rotated image
+            // put the new values in new location in rotated image
             rotatedImage2(newY, newX, 0) = red;
             rotatedImage2(newY, newX, 1) = green;
             rotatedImage2(newY, newX, 2) = blue;
@@ -424,7 +423,7 @@ Image filter_rotate(Image&image,string ch) {
     int originalHeight = image.height;
     int newY;
     int newX;
-    //temporary image to hold the rotated data
+    //to hold the rotated image
     Image rotatedImage(originalHeight, originalWidth);
     for (int i = 0; i < originalWidth; ++i) {  
         for (int j = 0; j < originalHeight; ++j) {
@@ -438,12 +437,12 @@ Image filter_rotate(Image&image,string ch) {
                 newX = originalWidth - 1 - i;
                 newY = j;
             }
-            // Access pixel values from original image
+            // get pixel values from original image
             unsigned char red = image(i, j, 0);
             unsigned char green = image(i, j, 1);
             unsigned char blue = image(i, j, 2);
 
-            // Assign pixel values to corresponding location in rotated image
+            // put the new values in new location in rotated image
             rotatedImage(newY, newX, 0) = red;
             rotatedImage(newY, newX, 1) = green;
             rotatedImage(newY, newX, 2) = blue;
@@ -478,6 +477,19 @@ void BlurFilter(Image& image, int kernelSize) {
         }
     }
 }
+void purplefilter(Image& image) {
+    for (int i = 0; i < image.width; i++) {
+        for (int j = 0; j < image.height; j++) {
+            for (int k = 0; k < image.channels; k++) {
+                // Must decrease the green color and make the red and blue constant
+                image(i, j, 1) *= 0.91;
+
+            }
+
+        }
+
+    }
+}
 
 int main() {
     int R=0, G=0, B=0;
@@ -486,7 +498,7 @@ int main() {
     bool x = false;
     string choice,choice2 ;
     while (true){
-       cout << "\n{1} load new image\n{2} GrayScale \n{3} Black And White \n{4} Invert Image \n{5} Lighten Image Or Darken Image \n{6} Flip Image\n{7} Frame\n{8} Blur\n{9} Rotate  \n{10}  \n{11}  \n{12}  \n{13}   \n{14}  \n{15}   \n{16}   \n{17} Save the image\n{18} Exit \n";
+       cout << "\n{1} load new image\n{2} GrayScale \n{3} Black And White \n{4} Invert Image \n{5} Lighten Image Or Darken Image \n{6} Flip Image\n{7} Frame\n{8} Blur\n{9} Rotate  \n{10} Purple Effect  \n{11}  \n{12}  \n{13}   \n{14}  \n{15}   \n{16}   \n{17} Save the image\n{18} Exit \n";
        cout << "enter your choice : " ;
        cin >> choice ;
         if (choice=="1") {
@@ -608,7 +620,7 @@ int main() {
             x = true;
         }
         else if (choice == "10") {
-           
+            purplefilter(image);
             x = true;
         }
         else if (choice == "11") {
