@@ -1,5 +1,5 @@
 #include <iostream>
-#include < algorithm >
+#include <algorithm>
 #include "Image_Class.h"
 using namespace std;
 Image image;
@@ -12,9 +12,7 @@ void invert_image(Image&image) {
                     image(i, j, k) = 255 - image(i, j, k);
 
                 }
-
             }
-
         }
 	return;
 }
@@ -490,7 +488,35 @@ void purplefilter(Image& image) {
 
     }
 }
-
+Image Detect_Image_Edges(Image&image){
+    int w = image.width;
+    int h = image.height;
+    Image image2(w,h);
+    for (int i = 1 ; i < image.width-1; ++i) {
+        for (int j = 1 ; j < image.height-1; ++j){
+            if((image(i-1,j,0)==255||image(i,j-1,0)==255||image(i+1,j,0)==255||image(i,j+1,0)==255) && image(i,j,0)==0){
+                image2(i,j,0) = 0;
+                image2(i,j,1) = 0;
+                image2(i,j,2) = 0;
+            }
+            else{
+                image2(i,j,0) = 255;
+                image2(i,j,1) = 255;
+                image2(i,j,2) = 255;
+            }
+        }
+    }
+    return image2 ;
+}
+void infrared(Image& image) {
+    for (int i = 0; i < image.width; i++) {
+        for (int j = 0; j < image.height; j++) {
+            image(i,j,0) = 255 ;
+            image(i,j,1) = 255 - image(i,j,1);
+            image(i,j,2) = 255 - image(i,j,2);
+        }
+    }
+}
 int main() {
     int R=0, G=0, B=0;
     cout << "=============== Welcome to Baby-Photoshop ===============\nPlease load the image, enter name of the image: ";
@@ -498,7 +524,7 @@ int main() {
     bool x = false;
     string choice,choice2 ;
     while (true){
-       cout << "\n{1} load new image\n{2} GrayScale \n{3} Black And White \n{4} Invert Image \n{5} Lighten Image Or Darken Image \n{6} Flip Image\n{7} Frame\n{8} Blur\n{9} Rotate  \n{10} Purple Effect  \n{11}  \n{12}  \n{13}   \n{14}  \n{15}   \n{16}   \n{17} Save the image\n{18} Exit \n";
+       cout << "\n{1} load new image\n{2} GrayScale \n{3} Black And White \n{4} Invert Image \n{5} Lighten Image Or Darken Image \n{6} Flip Image\n{7} Frame\n{8} Blur\n{9} Rotate  \n{10} Purple Effect  \n{11} Detect Image Edges  \n{12} infrared  \n{13}   \n{14}  \n{15}   \n{16}   \n{17} Save the image\n{18} Exit \n";
        cout << "enter your choice : " ;
        cin >> choice ;
         if (choice=="1") {
@@ -624,11 +650,14 @@ int main() {
             x = true;
         }
         else if (choice == "11") {
-
+            Black_White(image);
+            Image image2 = Detect_Image_Edges(image);
+            image2.saveImage("Temp2.jpg");
+            image.loadNewImage("Temp2.jpg");
             x = true;
         }
         else if (choice == "12") {
-
+            infrared(image);
             x = true;
         }
         else if (choice == "13") {
