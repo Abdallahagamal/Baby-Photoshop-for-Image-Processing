@@ -6,6 +6,7 @@ using namespace std;
 Image image;
 string filename;
 Image resize(Image& image) {
+    //mmmm
 
     int originalWidth = image.width;
     int originalHeight = image.height;
